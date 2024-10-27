@@ -1,0 +1,92 @@
+GPU_sim: true
+gravity: [0, -9.8, 0]
+damping: 0
+n_substep: 1
+substep_size: 5e-3
+kinematic_penalty: 1e7
+self_penalty: 1e5
+objects:
+  - name: wave
+    mesh_type: tet_ele_node
+    mesh: ../assets/misc/mat-30k
+    color_diffuse: [0.37, 0.47, 0.53]
+    density: 1e3
+    elastic_model: NeoHookean
+    solver: MixedMG19
+    relaxation: .7
+    young: 3e5
+    poisson: 0.4999
+    control_mag: 1e8
+    p_smooth: 1.
+    p_scale: 1e5
+    n_layer: 2
+    n_handles: [100, 300]
+    A_as_LDU: [0, 0, 0]
+    A_as_dense: [1, 0, 0]
+    n_iter: 1
+    operations:
+      - type: GS
+        max_iter: 10
+      - type: DS
+      - type: GS
+        max_iter: 8
+      - type: DS
+      - type: Direct
+      - type: US
+      - type: GS
+        max_iter: 8
+      - type: US
+      - type: GS
+        max_iter: 10
+  - name: floor
+    obj_type: kinematic
+    mesh_type: implicit
+    implicit_geo_type: Plane
+    implicit_geo_params: [0, 0, 0, 0, 1, 0, 50, 50, 10, 10]
+    color_diffuse: [0.2, 0.2, 0.2]
+  - name: wall1
+    obj_type: kinematic
+    mesh_type: implicit
+    implicit_geo_type: Plane
+    implicit_geo_params: [10, 10, 0, -1, 0, 0, 20, 20, 10, 10]
+    color_diffuse: [0.2, 0.2, 0.2]
+  - name: wall2
+    obj_type: kinematic
+    mesh_type: implicit
+    implicit_geo_type: Plane
+    implicit_geo_params: [-10, 10, 0, 1, 0, 0, 20, 20, 10, 10]
+    color_diffuse: [0.2, 0.2, 0.2]
+  - name: wall3
+    obj_type: kinematic
+    mesh_type: implicit
+    implicit_geo_type: Plane
+    implicit_geo_params: [0, 10, 10, 0, 0, -1, 20, 20, 10, 10]
+    color_diffuse: [0.2, 0.2, 0.2]
+  - name: wall4
+    obj_type: kinematic
+    mesh_type: implicit
+    implicit_geo_type: Plane
+    implicit_geo_params: [0, 10, -10, 0, 0, 1, 20, 20, 10, 10]
+    color_diffuse: [0.2, 0.2, 0.2]
+  - name: ball
+    obj_type: kinematic
+    mesh_type: implicit
+    implicit_geo_type: Sphere
+    implicit_geo_params: [0, 10, 0, 1.8, 20, 10]
+    color_diffuse: [0.8, 0.8, 0.8]
+    velocity: [0, -60, 0]
+    end_frame: 21
+  - name: ball2
+    obj_type: kinematic
+    mesh_type: implicit
+    implicit_geo_type: Sphere
+    implicit_geo_params: [5, 10, 6, 1.8, 20, 10]
+    color_diffuse: [0.8, 0.8, 0.8]
+    velocity: [0, -60, 0]
+    start_frame: 50
+    end_frame: 71
+
+
+
+    
+

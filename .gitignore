@@ -1,0 +1,8 @@
+.vscode
+.xmake
+bin
+build
+vsxmake2019
+assets/sponza
+compile_commands.json
+assets/houdini

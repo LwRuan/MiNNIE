@@ -1,0 +1,57 @@
+GPU_sim: true
+gravity: [0, 0, 0]
+damping: 0
+n_substep: 1
+substep_size: 1e-2
+kinematic_penalty: 1e8
+self_penalty: 1e6
+objects:
+  - name: bulging-t
+    mesh_type: tet_ele_node
+    mesh: ../assets/misc/cylinder-10k
+    scale: 10.
+    color_diffuse: [0.37, 0.47, 0.53]
+    density: 1e3
+    elastic_model: NeoHookean
+    solver: MixedMG19
+    relaxation: 0.5
+    young: 1e6
+    poisson: 0.45
+    control_mag: 1e7
+    self_collision: true
+    quasi_static: true
+    p_smooth: 1.
+    n_layer: 1
+    n_handles: [100]
+    A_as_LDU: [0, 0]
+    A_as_dense: [1, 0]
+    p_scale: 1e6
+    n_iter: 1
+    operations:
+      - type: GS
+        max_iter: 3
+      - type: DS
+      - type: Direct
+      - type: US
+      - type: GS
+        max_iter: 3
+    skeleton:
+      - joint: root
+        parent: -1
+        offset: [0, 5, 0]
+        axis: [0, 0, 1]
+        rot_init: 0
+        rot_limit: [0, 0]
+        bone_start: [0, 0, 0]
+        bone_end: [0, -3, 0]
+        bone_radius: 1
+      - joint: hinge
+        parent: 0
+        offset: [0, -5, 0]
+        axis: [0, 0, 1]
+        rot_init: 0
+        rot_limit: [0, 120]
+        bone_start: [0, -2, 0]
+        bone_end: [0, -5, 0]
+        bone_radius: 1
+        
